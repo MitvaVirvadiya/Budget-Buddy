@@ -51,6 +51,12 @@ const format = winston.format.combine(
 const transports = [
   // Allow the use the console to print the messages
   new winston.transports.Console(),
+  
+  // Save error-level logs to a specific file.
+  new winston.transports.File({ filename: "logs/error.log", level: "error" }),
+
+  // Save all logs (including error-level logs) to a combined log file.
+  new winston.transports.File({ filename: "logs/combined.log" }),
 ];
 
 // Create the logger instance that has to be exported
