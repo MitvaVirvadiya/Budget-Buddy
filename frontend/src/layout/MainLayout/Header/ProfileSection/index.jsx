@@ -25,36 +25,48 @@ import Stack from '@mui/material/Stack';
 import Switch from '@mui/material/Switch';
 import Typography from '@mui/material/Typography';
 
-// third-party
-import PerfectScrollbar from 'react-perfect-scrollbar';
-
 // project imports
 import MainCard from 'ui-component/cards/MainCard';
 import Transitions from 'ui-component/extended/Transitions';
-import UpgradePlanCard from './UpgradePlanCard';
 import User1 from 'assets/images/users/user-round.svg';
 
 // assets
 import { IconLogout, IconSearch, IconSettings, IconUser } from '@tabler/icons-react';
+import { getDecodedToken } from 'utils/decryption';
+import { toast } from 'react-toastify';
+import { authHeadersConfig } from 'config';
+import axios from 'axios';
 
 // ==============================|| PROFILE MENU ||============================== //
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:8080';
 
 const ProfileSection = () => {
   const theme = useTheme();
   const customization = useSelector((state) => state.customization);
   const navigate = useNavigate();
 
-  const [sdm, setSdm] = useState(true);
-  const [value, setValue] = useState('');
-  const [notification, setNotification] = useState(false);
+  const { username, role } = getDecodedToken();
+
   const [selectedIndex, setSelectedIndex] = useState(-1);
   const [open, setOpen] = useState(false);
-  /**
-   * anchorRef is used on different componets and specifying one type leads to other components throwing an error
-   * */
+
   const anchorRef = useRef(null);
   const handleLogout = async () => {
-    console.log('Logout');
+      try {
+        const response = await axios.post(`${BACKEND_URL}/api/v1/users/logout`, {}, authHeadersConfig);
+        
+        if(response.data.success){
+          toast.success(response.data.message)
+  
+          localStorage.clear()
+  
+          navigate('/login');
+          return response.data;
+        }
+      } catch (error) {
+        console.error('logout failed:', error.response?.data?.message || error.message);
+        throw error;
+      }
   };
 
   const handleClose = (event) => {
@@ -157,81 +169,51 @@ const ProfileSection = () => {
                       <Stack direction="row" spacing={0.5} alignItems="center">
                         <Typography variant="h4">Good Morning,</Typography>
                         <Typography component="span" variant="h4" sx={{ fontWeight: 400 }}>
-                          Johne Doe
+                          {username || "username"}
                         </Typography>
                       </Stack>
-                      <Typography variant="subtitle2">Project Admin</Typography>
+                      <Typography variant="subtitle2">{role || "role"}</Typography>
                     </Stack>
                   </Box>
-                    <Divider />
-                  <PerfectScrollbar style={{ height: '100%', maxHeight: 'calc(100vh - 250px)', overflowX: 'hidden' }}>
-                    <List
-                      component="nav"
-                      sx={{
-                        width: '100%',
-                        maxWidth: 350,
-                        minWidth: 300,
-                        backgroundColor: theme.palette.background.paper,
-                        borderRadius: '10px',
-                        [theme.breakpoints.down('md')]: {
-                          minWidth: '100%'
-                        },
-                        '& .MuiListItemButton-root': {
-                          mt: 0.5
-                        },
-                        px: 0.5,
-                      }}
+                  <Divider />
+                  <List
+                    component="nav"
+                    sx={{
+                      width: '100%',
+                      maxWidth: 350,
+                      minWidth: 300,
+                      backgroundColor: theme.palette.background.paper,
+                      borderRadius: '10px',
+                      [theme.breakpoints.down('md')]: {
+                        minWidth: '100%'
+                      },
+                      '& .MuiListItemButton-root': {
+                        mt: 0.5
+                      },
+                      px: 0.5
+                    }}
+                  >
+                    <ListItemButton
+                      sx={{ borderRadius: `${customization.borderRadius}px` }}
+                      selected={selectedIndex === 0}
+                      onClick={(event) => handleListItemClick(event, 0, '#')}
                     >
-                      <ListItemButton
-                        sx={{ borderRadius: `${customization.borderRadius}px` }}
-                        selected={selectedIndex === 0}
-                        onClick={(event) => handleListItemClick(event, 0, '#')}
-                      >
-                        <ListItemIcon>
-                          <IconSettings stroke={1.5} size="1.3rem" />
-                        </ListItemIcon>
-                        <ListItemText primary={<Typography variant="body2">Account Settings</Typography>} />
-                      </ListItemButton>
-                      <ListItemButton
-                        sx={{ borderRadius: `${customization.borderRadius}px` }}
-                        selected={selectedIndex === 1}
-                        onClick={(event) => handleListItemClick(event, 1, '#')}
-                      >
-                        <ListItemIcon>
-                          <IconUser stroke={1.5} size="1.3rem" />
-                        </ListItemIcon>
-                        <ListItemText
-                          primary={
-                            <Grid container spacing={1} justifyContent="space-between">
-                              <Grid item>
-                                <Typography variant="body2">Social Profile</Typography>
-                              </Grid>
-                              <Grid item>
-                                <Chip
-                                  label="02"
-                                  size="small"
-                                  sx={{
-                                    bgcolor: theme.palette.warning.dark,
-                                    color: theme.palette.background.default
-                                  }}
-                                />
-                              </Grid>
-                            </Grid>
-                          }
-                        />
-                      </ListItemButton>
-                      <ListItemButton
-                        sx={{ borderRadius: `${customization.borderRadius}px` }}
-                        selected={selectedIndex === 4}
-                        onClick={handleLogout}
-                      >
-                        <ListItemIcon>
-                          <IconLogout stroke={1.5} size="1.3rem" />
-                        </ListItemIcon>
-                        <ListItemText primary={<Typography variant="body2">Logout</Typography>} />
-                      </ListItemButton>
-                    </List>
-                  </PerfectScrollbar>
+                      <ListItemIcon>
+                        <IconSettings stroke={1.5} size="1.3rem" />
+                      </ListItemIcon>
+                      <ListItemText primary={<Typography variant="body2">Account Settings</Typography>} />
+                    </ListItemButton>
+                    <ListItemButton
+                      sx={{ borderRadius: `${customization.borderRadius}px` }}
+                      selected={selectedIndex === 4}
+                      onClick={handleLogout}
+                    >
+                      <ListItemIcon>
+                        <IconLogout stroke={1.5} size="1.3rem" />
+                      </ListItemIcon>
+                      <ListItemText primary={<Typography variant="body2">Logout</Typography>} />
+                    </ListItemButton>
+                  </List>
                 </MainCard>
               </ClickAwayListener>
             </Paper>

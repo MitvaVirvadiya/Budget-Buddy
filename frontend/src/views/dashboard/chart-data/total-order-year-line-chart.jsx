@@ -35,7 +35,7 @@ const chartData = {
       },
       y: {
         title: {
-          formatter: () => 'Total Order'
+          formatter: () => 'Total Expenses'
         }
       },
       marker: {

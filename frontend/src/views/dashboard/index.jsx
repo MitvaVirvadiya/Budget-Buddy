@@ -15,15 +15,19 @@ import { gridSpacing } from 'store/constant';
 
 // assets
 import StorefrontTwoToneIcon from '@mui/icons-material/StorefrontTwoTone';
+import axios from 'axios';
+import { useAuth } from 'context/Auth';
 
 // ==============================|| DEFAULT DASHBOARD ||============================== //
 
 const Dashboard = () => {
-  const [isLoading, setLoading] = useState(true);
+  const { getUser, user, isLoading } = useAuth();
 
   useEffect(() => {
-    setLoading(false);
+    getUser()
   }, []);
+
+  console.log("user", user);  
 
   return (
     <Grid container spacing={gridSpacing}>
@@ -44,8 +48,8 @@ const Dashboard = () => {
                 <TotalIncomeLightCard
                   {...{
                     isLoading: isLoading,
-                    total: 203,
-                    label: 'Total Income',
+                    total: 30,
+                    label: 'Monthly Income',
                     icon: <StorefrontTwoToneIcon fontSize="inherit" />
                   }}
                 />
@@ -54,7 +58,7 @@ const Dashboard = () => {
           </Grid>
         </Grid>
       </Grid>
-      <Grid item xs={12}>
+      {/* <Grid item xs={12}>
         <Grid container spacing={gridSpacing}>
           <Grid item xs={12} md={8}>
             <TotalGrowthBarChart isLoading={isLoading} />
@@ -63,7 +67,7 @@ const Dashboard = () => {
             <PopularCard isLoading={isLoading} />
           </Grid>
         </Grid>
-      </Grid>
+      </Grid> */}
     </Grid>
   );
 };

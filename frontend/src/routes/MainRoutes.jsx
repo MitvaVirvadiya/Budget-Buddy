@@ -3,6 +3,7 @@ import { lazy } from 'react';
 // project imports
 import MainLayout from 'layout/MainLayout';
 import Loadable from 'ui-component/Loadable';
+import ProtectedRoute from './ProtectedRoute';
 
 // dashboard routing
 const DashboardDefault = Loadable(lazy(() => import('views/dashboard')));
@@ -16,7 +17,9 @@ const Exports = Loadable(lazy(() => import('views/utilities/exports')));
 
 const MainRoutes = {
   path: '/',
-  element: <MainLayout />,
+  element: (
+      <MainLayout />
+  ),
   children: [
     {
       path: '/',
@@ -31,7 +34,7 @@ const MainRoutes = {
       children: [
         {
           path: 'expenses',
-          element: <Expenses/>
+          element: <Expenses />
         }
       ]
     },

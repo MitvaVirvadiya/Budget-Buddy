@@ -88,7 +88,7 @@ const EarningCard = ({ isLoading }) => {
                         mt: 1
                       }}
                     >
-                      <img src={EarningIcon} alt="Notification" />
+                      <img src={EarningIcon} alt="$" />
                     </Avatar>
                   </Grid>
                   <Grid item>
@@ -132,9 +132,6 @@ const EarningCard = ({ isLoading }) => {
                       <MenuItem onClick={handleClose}>
                         <PictureAsPdfTwoToneIcon sx={{ mr: 1.75 }} /> Export
                       </MenuItem>
-                      <MenuItem onClick={handleClose}>
-                        <ArchiveTwoToneIcon sx={{ mr: 1.75 }} /> Archive File
-                      </MenuItem>
                     </Menu>
                   </Grid>
                 </Grid>
@@ -142,7 +139,7 @@ const EarningCard = ({ isLoading }) => {
               <Grid item>
                 <Grid container alignItems="center">
                   <Grid item>
-                    <Typography sx={{ fontSize: '2.125rem', fontWeight: 500, mr: 1, mt: 1.75, mb: 0.75 }}>$500.00</Typography>
+                    <Typography sx={{ fontSize: '2.125rem', fontWeight: 500, mr: 1, mt: 1.75, mb: 0.75 }}>₹72000.00</Typography>
                   </Grid>
                   <Grid item>
                     <Avatar
@@ -166,7 +163,7 @@ const EarningCard = ({ isLoading }) => {
                     color: 'secondary.200'
                   }}
                 >
-                  Total Earning
+                  Total Expense
                 </Typography>
               </Grid>
             </Grid>

@@ -12,6 +12,9 @@ import themes from 'themes';
 
 // project imports
 import NavigationScroll from 'layout/NavigationScroll';
+import ContextWrapper from 'context';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 // ==============================|| APP ||============================== //
 
@@ -19,14 +22,17 @@ const App = () => {
   const customization = useSelector((state) => state.customization);
 
   return (
-    <StyledEngineProvider injectFirst>
-      <ThemeProvider theme={themes(customization)}>
-        <CssBaseline />
-        <NavigationScroll>
-          <RouterProvider router={router} />
-        </NavigationScroll>
-      </ThemeProvider>
-    </StyledEngineProvider>
+    <ContextWrapper>
+      <StyledEngineProvider injectFirst>
+        <ThemeProvider theme={themes(customization)}>
+          <CssBaseline />
+          <NavigationScroll>
+            <RouterProvider router={router} />
+            <ToastContainer />
+          </NavigationScroll>
+        </ThemeProvider>
+      </StyledEngineProvider>
+    </ContextWrapper>
   );
 };
 
