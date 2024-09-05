@@ -26,7 +26,7 @@ export const AuthProvider = ({ children }) => {
       const response = await axios.post(`${BACKEND_URL}/api/v1/users/login`, body, headersConfig);
 
       if (response.data.success) {
-        toast.success(response.data.message)
+        toast.success(response.data.message);
         const { user: loggedInUser, accessToken, refreshToken } = response.data.data;
 
         setUser(loggedInUser);
@@ -38,6 +38,7 @@ export const AuthProvider = ({ children }) => {
       }
     } catch (error) {
       console.error('Login failed:', error.response?.data?.message || error.message);
+      toast.error(error.response?.data?.message);
       throw error;
     }
   };
@@ -53,8 +54,8 @@ export const AuthProvider = ({ children }) => {
     try {
       const response = await axios.post(`${BACKEND_URL}/api/v1/users/register`, body, headersConfig);
 
-      if(response.data.success){
-        toast.success(response.data.message)
+      if (response.data.success) {
+        toast.success(response.data.message);
         return response.data;
       }
     } catch (error) {
@@ -64,19 +65,19 @@ export const AuthProvider = ({ children }) => {
   };
 
   const getUser = async (values) => {
-    setUser(null)
-    setLoading(true)
+    setUser(null);
+    setLoading(true);
     try {
       const response = await axios.get(`${BACKEND_URL}/api/v1/users/current-user`, authHeadersConfig);
 
-      if(response.data.success){
+      if (response.data.success) {
         setUser(response.data.data);
       }
     } catch (error) {
       console.error('Get User failed:', error.response?.data?.message || error.message);
       throw error;
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
   };
 

@@ -8,6 +8,17 @@ export const UserRolesEnum = {
 
 export const AvailableUserRoles = Object.values(UserRolesEnum);
 
+export const ExpenseCategoryEnum = [
+  "Food",
+  "Clothing",
+  "Education",
+  "Medical",
+  "Transportation",
+  "Utilities",
+  "Entertainment",
+  "Others",
+];
+
 /**
  * @type {{ GOOGLE: "GOOGLE"; EMAIL_PASSWORD: "EMAIL_PASSWORD"} as const}
  */

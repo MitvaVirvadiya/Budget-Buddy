@@ -213,7 +213,7 @@ const AuthRegister = ({ ...others }) => {
                 </FormHelperText>
               )}
             </FormControl>
-            {strength !== 0 && (
+            {/* {strength !== 0 && (
               <FormControl fullWidth>
                 <Box sx={{ mb: 2 }}>
                   <Grid container spacing={2} alignItems="center">
@@ -228,7 +228,7 @@ const AuthRegister = ({ ...others }) => {
                   </Grid>
                 </Box>
               </FormControl>
-            )}
+            )} */}
             <Grid container alignItems="center" justifyContent="space-between">
               <Grid item>
                 <FormControlLabel

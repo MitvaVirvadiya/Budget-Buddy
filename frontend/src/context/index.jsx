@@ -1,12 +1,13 @@
-import React from 'react'
-import { AuthProvider } from './Auth'
+import React from 'react';
+import { AuthProvider } from './Auth';
+import { ExpenseProvider } from './Expense';
 
-const ContextWrapper = ({children}) => {
+const ContextWrapper = ({ children }) => {
   return (
     <AuthProvider>
-        {children}
+      <ExpenseProvider>{children}</ExpenseProvider>
     </AuthProvider>
-  )
-}
+  );
+};
 
-export default ContextWrapper
+export default ContextWrapper;

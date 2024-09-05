@@ -92,6 +92,7 @@ import healthcheckRouter from "./routes/healthcheck.routes.js";
 
 // * App routes
 import userRouter from "./routes/auth/user.routes.js";
+import expenseRouter from "./routes/expenses/expense.routes.js"
 import { avoidInProduction } from "./middlewares/auth.middlewares.js";
 
 // * healthcheck
@@ -102,6 +103,7 @@ app.get("/", (req, res) => {
   res.json({message: "welcome to budget buddy", status: 200});
 });
 app.use("/api/v1/users", userRouter);
+app.use("/api/v1/expenses", expenseRouter);
 
 initializeSocketIO(io);
 

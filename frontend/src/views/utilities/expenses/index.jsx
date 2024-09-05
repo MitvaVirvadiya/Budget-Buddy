@@ -1,9 +1,16 @@
-import React from 'react'
+import React from 'react';
+import MainCard from 'ui-component/cards/MainCard';
+import ExpenseTable from './components/ExpenseTable';
 
 const Expenses = () => {
-  return (
-    <div>Expenses</div>
-  )
-}
 
-export default Expenses
+  return (
+    <>
+      <MainCard title="Expenses">
+        <ExpenseTable />
+      </MainCard>
+    </>
+  );
+};
+
+export default Expenses;
