@@ -10,19 +10,14 @@ import { verifyJWT } from "../../middlewares/auth.middlewares.js";
 
 const router = Router();
 
-// Create a new expense
-router.post("/", verifyJWT, createExpense);
+router.use(verifyJWT);
 
-// Get all expenses
-router.get("/", verifyJWT, getExpenses);
+router.route("/").post(createExpense).get(getExpenses);
 
-// Get an expense by ID
-router.get("/:id", verifyJWT, getExpenseById);
-
-// Update an expense
-router.put("/:id", verifyJWT, updateExpense);
-
-// Delete an expense
-router.delete("/:id", verifyJWT, deleteExpense);
+router
+  .route("/:id")
+  .get(getExpenseById)
+  .put(updateExpense)
+  .delete(deleteExpense);
 
 export default router;

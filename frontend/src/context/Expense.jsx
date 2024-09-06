@@ -1,6 +1,4 @@
 import axios from 'axios';
-import { authHeadersConfig } from 'config';
-import { headersConfig } from 'config';
 import { createContext, useContext, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 
@@ -13,6 +11,14 @@ export const ExpenseProvider = ({ children }) => {
 
   const fetchExpenses = async () => {
     setLoading(true);
+
+    const authHeadersConfig = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`
+      }
+    };
+
     try {
       const response = await axios.get(`${BACKEND_URL}/api/v1/expenses`, authHeadersConfig);
       if (response.data.success) {
@@ -28,6 +34,13 @@ export const ExpenseProvider = ({ children }) => {
 
   const addExpense = async (values) => {
     try {
+      const authHeadersConfig = {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('accessToken')}`
+        }
+      };
+
       const response = await axios.post(`${BACKEND_URL}/api/v1/expenses`, values, authHeadersConfig);
       if (response.data.success) {
         toast.success('Expense added successfully');
@@ -41,6 +54,13 @@ export const ExpenseProvider = ({ children }) => {
 
   const updateExpense = async (id, values) => {
     try {
+      const authHeadersConfig = {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('accessToken')}`
+        }
+      };
+
       const response = await axios.put(`${BACKEND_URL}/api/v1/expenses/${id}`, values, authHeadersConfig);
       if (response.data.success) {
         toast.success('Expense updated successfully');
@@ -54,6 +74,13 @@ export const ExpenseProvider = ({ children }) => {
 
   const deleteExpense = async (id) => {
     try {
+      const authHeadersConfig = {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('accessToken')}`
+        }
+      };
+      
       const response = await axios.delete(`${BACKEND_URL}/api/v1/expenses/${id}`, authHeadersConfig);
       if (response.data.success) {
         toast.success('Expense deleted successfully');
@@ -65,12 +92,8 @@ export const ExpenseProvider = ({ children }) => {
     }
   };
 
-  useEffect(() => {
-    fetchExpenses();
-  }, []);
-
   return (
-    <expenseContext.Provider value={{ expenses, addExpense, updateExpense, deleteExpense, isLoading }}>
+    <expenseContext.Provider value={{ expenses, fetchExpenses,  addExpense, updateExpense, deleteExpense, isLoading }}>
       {children}
     </expenseContext.Provider>
   );

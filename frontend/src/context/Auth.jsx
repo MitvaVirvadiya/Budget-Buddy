@@ -1,9 +1,9 @@
 import axios from 'axios';
-import { authHeadersConfig } from 'config';
-import { headersConfig } from 'config';
+
 import { createContext, useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { authHeadersConfig, headersConfig } from 'utils/headers';
 
 const authContext = createContext();
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:8080';
@@ -23,6 +23,12 @@ export const AuthProvider = ({ children }) => {
     console.log('body', body);
 
     try {
+      const headersConfig = {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      };
+
       const response = await axios.post(`${BACKEND_URL}/api/v1/users/login`, body, headersConfig);
 
       if (response.data.success) {
@@ -52,6 +58,12 @@ export const AuthProvider = ({ children }) => {
     };
 
     try {
+      const headersConfig = {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      };
+
       const response = await axios.post(`${BACKEND_URL}/api/v1/users/register`, body, headersConfig);
 
       if (response.data.success) {
@@ -68,6 +80,13 @@ export const AuthProvider = ({ children }) => {
     setUser(null);
     setLoading(true);
     try {
+      const authHeadersConfig = {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('accessToken')}`
+        }
+      };
+
       const response = await axios.get(`${BACKEND_URL}/api/v1/users/current-user`, authHeadersConfig);
 
       if (response.data.success) {
