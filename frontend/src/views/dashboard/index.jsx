@@ -15,27 +15,35 @@ import { gridSpacing } from 'store/constant';
 import StorefrontTwoToneIcon from '@mui/icons-material/StorefrontTwoTone';
 import axios from 'axios';
 import { useAuth } from 'context/Auth';
+import { useDashBoard } from 'context/Dashboard';
+import { useExpense } from 'context/Expense';
 
 // ==============================|| DEFAULT DASHBOARD ||============================== //
 
 const Dashboard = () => {
-  const { getUser, user, isLoading } = useAuth();
+  const { getUser } = useAuth();
+  const { expenses } = useExpense()
+  const { dashBoardData, isLoading, fetchDashBoardData } = useDashBoard();
 
   useEffect(() => {
-    getUser()
+    getUser();
   }, []);
 
-  console.log("user", user);  
+  useEffect(() => {
+    fetchDashBoardData();
+  }, [expenses]);
+  
+console.log('dashBoardData', dashBoardData)
 
   return (
     <Grid container spacing={gridSpacing}>
       <Grid item xs={12}>
         <Grid container spacing={gridSpacing}>
           <Grid item lg={4} md={6} sm={6} xs={12}>
-            <EarningCard isLoading={isLoading} />
+            <EarningCard isLoading={isLoading} data={dashBoardData} />
           </Grid>
           <Grid item lg={4} md={6} sm={6} xs={12}>
-            <TotalOrderLineChartCard isLoading={isLoading} />
+            <TotalOrderLineChartCard isLoading={isLoading} data={dashBoardData} />
           </Grid>
           <Grid item lg={4} md={12} sm={12} xs={12}>
             <Grid container spacing={gridSpacing}>

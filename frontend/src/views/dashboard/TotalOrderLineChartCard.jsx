@@ -25,7 +25,7 @@ import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 
 // ==============================|| DASHBOARD - TOTAL ORDER LINE CHART CARD ||============================== //
 
-const TotalOrderLineChartCard = ({ isLoading }) => {
+const TotalOrderLineChartCard = ({ isLoading, data }) => {
   const theme = useTheme();
 
   const [timeValue, setTimeValue] = React.useState(false);
@@ -108,7 +108,7 @@ const TotalOrderLineChartCard = ({ isLoading }) => {
                       sx={{ color: 'inherit' }}
                       onClick={(e) => handleChangeTime(e, false)}
                     >
-                      Year
+                      Today
                     </Button>
                   </Grid>
                 </Grid>
@@ -119,9 +119,9 @@ const TotalOrderLineChartCard = ({ isLoading }) => {
                     <Grid container alignItems="center">
                       <Grid item>
                         {timeValue ? (
-                          <Typography sx={{ fontSize: '2.125rem', fontWeight: 500, mr: 1, mt: 1.75, mb: 0.75 }}>₹29.5k</Typography>
+                          <Typography sx={{ fontSize: '2.125rem', fontWeight: 500, mr: 1, mt: 1.75, mb: 0.75 }}>₹{data?.currentMonthExpenses || 0}</Typography>
                         ) : (
-                          <Typography sx={{ fontSize: '2.125rem', fontWeight: 500, mr: 1, mt: 1.75, mb: 0.75 }}>₹72k</Typography>
+                          <Typography sx={{ fontSize: '2.125rem', fontWeight: 500, mr: 1, mt: 1.75, mb: 0.75 }}>₹{data?.todayExpenses || 0}</Typography>
                         )}
                       </Grid>
                       <Grid item>

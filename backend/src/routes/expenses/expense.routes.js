@@ -12,15 +12,12 @@ const router = Router();
 
 router.use(verifyJWT);
 
-router
-  .route("/")
-  .post(createExpense)
-  .get("/", getExpenses);
+router.route("/").post(createExpense).get(getExpenses);
 
 router
   .route("/:id")
-  .get("/:id", getExpenseById)
-  .put("/:id", updateExpense)
-  .delete("/:id", deleteExpense);
+  .get(getExpenseById)
+  .put(updateExpense)
+  .delete(deleteExpense);
 
 export default router;

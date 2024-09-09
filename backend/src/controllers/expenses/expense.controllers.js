@@ -15,7 +15,9 @@ export const createExpense = asyncHandler(async (req, res) => {
 });
 
 export const getExpenses = asyncHandler(async (req, res) => {
-  const expenses = await Expense.find();
+  const userId = req.user.id;
+
+  const expenses = await Expense.find({ owner: userId });
 
   res
     .status(200)
@@ -23,9 +25,12 @@ export const getExpenses = asyncHandler(async (req, res) => {
 });
 
 export const getExpenseById = asyncHandler(async (req, res) => {
-  const expense = await Expense.findById(req.params.id);
+  const userId = req.user.id;
+
+  const expense = await Expense.findOne({ _id: req.params.id, owner: userId });
+
   if (!expense) {
-    throw new ApiError(404, "Expense not found");
+    throw new ApiError(404, "Expense not found or you don't have access to it");
   }
 
   res
