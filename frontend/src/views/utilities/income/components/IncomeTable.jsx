@@ -1,29 +1,29 @@
 import React, { useEffect, useState } from 'react';
 import { Box, Button, Grid, Typography, IconButton, Tooltip } from '@mui/material';
 import { Edit as EditIcon, Delete as DeleteIcon } from '@mui/icons-material';
-import { MaterialReactTable, useMaterialReactTable } from 'material-react-table';
-import ExpenseFormDialog from './ExpenseFormDialog';
-import { useExpense } from 'context/Expense';
-import CategoryIcon from './CategoryIcon'; // Custom category icon component
+import { MaterialReactTable } from 'material-react-table';
+import IncomeFormDialog from './IncomeFormDialog'; 
+import { useIncome } from 'context/Income'; 
+import CategoryIcon from './CategoryIcon'; 
 
-const ExpenseTable = () => {
-  const { expenses, deleteExpense, fetchExpenses, isLoading } = useExpense();
+const IncomeTable = () => {
+  const { incomes, deleteIncome, fetchIncome, isLoading } = useIncome(); 
   const [openForm, setOpenForm] = useState(false);
-  const [currentExpense, setCurrentExpense] = useState(null);
+  const [currentIncome, setCurrentIncome] = useState(null); 
   const [data, setData] = useState([]);
 
-  const handleEdit = (expense) => {
-    setCurrentExpense(expense);
+  const handleEdit = (income) => {
+    setCurrentIncome(income); 
     setOpenForm(true);
   };
 
   const handleDelete = async (id) => {
-    await deleteExpense(id);
+    await deleteIncome(id); 
   };
 
   const handleCloseForm = () => {
     setOpenForm(false);
-    setCurrentExpense(null);
+    setCurrentIncome(null);
   };
 
   const formatDate = (date) => {
@@ -39,8 +39,16 @@ const ExpenseTable = () => {
       Cell: ({ cell }) => formatDate(cell.getValue())
     },
     {
-      accessorKey: 'name',
-      header: 'Name'
+      accessorKey: 'source',
+      header: 'Source'
+    },
+    {
+      accessorKey: 'recurring',
+      header: 'Recurring',
+      Cell: ({ cell }) => {
+        const value = cell.getValue();
+        return value ? 'Yes' : 'No'; 
+      }
     },
     {
       accessorKey: 'category',
@@ -61,7 +69,7 @@ const ExpenseTable = () => {
     {
       accessorKey: 'amount',
       header: 'Amount',
-      Cell: ({ cell }) => `₹${cell.getValue()}` // Formatting amount as currency
+      Cell: ({ cell }) => `₹${cell.getValue()}` 
     },
     {
       accessorKey: 'actions',
@@ -84,12 +92,12 @@ const ExpenseTable = () => {
   ];
 
   useEffect(() => {
-    const sortedExpenses = [...expenses].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-    setData(sortedExpenses);
-  }, [expenses]);
+    const sortedIncomes = [...incomes].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)); 
+    setData(sortedIncomes);
+  }, [incomes]);
 
   useEffect(() => {
-    fetchExpenses();
+    fetchIncome(); 
   }, []);
 
   return (
@@ -127,20 +135,20 @@ const ExpenseTable = () => {
           renderTopToolbarCustomActions={() => (
             <Grid container alignItems="center" justifyContent="space-between" sx={{ mb: 2 }}>
               <Typography variant="h3" color="#555" ml={1} mt={1}>
-                Expenses
+                Incomes
               </Typography>
               <Button variant="contained" color="primary" onClick={() => setOpenForm(true)}>
-                Add Expense
+                Add Income
               </Button>
             </Grid>
           )}
         />
       </Box>
       {openForm && (
-        <ExpenseFormDialog open={openForm} handleClose={handleCloseForm} initialData={currentExpense} isEdit={!!currentExpense} />
+        <IncomeFormDialog open={openForm} handleClose={handleCloseForm} currentIncome={currentIncome} isEdit={!!currentIncome} /> 
       )}
     </>
   );
 };
 
-export default ExpenseTable;
+export default IncomeTable;

@@ -39,14 +39,20 @@ export const getExpenseById = asyncHandler(async (req, res) => {
 });
 
 export const updateExpense = asyncHandler(async (req, res) => {
-  const expense = await Expense.findByIdAndUpdate(req.params.id, req.body, {
+  const userId = req.user._id;
+  
+  let expense = await Expense.findOne({ _id: req.params.id, owner: userId });
+
+  if (!expense) {
+    throw new ApiError(403, "No permission to update this expense or expense not found");
+  }
+
+  req.body.updatedAt = Date.now();  
+
+  expense = await Expense.findByIdAndUpdate(req.params.id, req.body, {
     new: true,
     runValidators: true,
   });
-
-  if (!expense) {
-    throw new ApiError(404, "Expense not found");
-  }
 
   res
     .status(200)
@@ -54,10 +60,15 @@ export const updateExpense = asyncHandler(async (req, res) => {
 });
 
 export const deleteExpense = asyncHandler(async (req, res) => {
-  const expense = await Expense.findByIdAndDelete(req.params.id);
+  const userId = req.user._id;
+
+  const expense = await Expense.findOne({ _id: req.params.id, owner: userId });
+
   if (!expense) {
-    throw new ApiError(404, "Expense not found");
+    throw new ApiError(403, "No permission to delete this expense or expense not found");
   }
+
+  await Expense.findByIdAndDelete(req.params.id);
 
   res
     .status(200)

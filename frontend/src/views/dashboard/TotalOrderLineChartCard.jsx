@@ -144,7 +144,7 @@ const TotalOrderLineChartCard = ({ isLoading, data }) => {
                             color: 'primary.200'
                           }}
                         >
-                          {timeValue ? "Monthly" : "Yearly"} Expneses
+                          {timeValue ? "Monthly" : "Daily"} Expneses
                         </Typography>
                       </Grid>
                     </Grid>

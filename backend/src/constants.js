@@ -19,6 +19,15 @@ export const ExpenseCategoryEnum = [
   "Others",
 ];
 
+export const IncomeCategoryEnum = [
+  "Salary",
+  "Business",
+  "Investments",
+  "Freelance",
+  "Rental",
+  "Other",
+];
+
 /**
  * @type {{ GOOGLE: "GOOGLE"; EMAIL_PASSWORD: "EMAIL_PASSWORD"} as const}
  */

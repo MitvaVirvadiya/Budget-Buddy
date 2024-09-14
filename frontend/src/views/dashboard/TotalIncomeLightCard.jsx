@@ -9,10 +9,12 @@ import ListItem from '@mui/material/ListItem';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import ListItemText from '@mui/material/ListItemText';
 import Typography from '@mui/material/Typography';
+import StorefrontTwoToneIcon from '@mui/icons-material/StorefrontTwoTone';
 
 // project imports
 import MainCard from 'ui-component/cards/MainCard';
 import TotalIncomeCard from 'ui-component/cards/Skeleton/TotalIncomeCard';
+import { formatCurrency } from 'utils/formatCurrency';
 
 // styles
 const CardWrapper = styled(MainCard)(({ theme }) => ({
@@ -40,9 +42,7 @@ const CardWrapper = styled(MainCard)(({ theme }) => ({
   }
 }));
 
-// ==============================|| DASHBOARD - TOTAL INCOME LIGHT CARD ||============================== //
-
-const TotalIncomeLightCard = ({ isLoading, total, icon, label }) => {
+const TotalIncomeLightCard = ({ isLoading, data, icon, label }) => {
   const theme = useTheme();
 
   return (
@@ -64,15 +64,15 @@ const TotalIncomeLightCard = ({ isLoading, total, icon, label }) => {
                       color: label === 'Meeting attends' ? 'error.dark' : 'warning.dark'
                     }}
                   >
-                    {icon}
+                    <StorefrontTwoToneIcon fontSize="inherit" />
                   </Avatar>
                 </ListItemAvatar>
                 <ListItemText
                   sx={{ py: 0, mt: 0.45, mb: 0.45 }}
-                  primary={<Typography variant="h4">₹{total}k</Typography>}
+                  primary={<Typography variant="h4">{formatCurrency(data?.currentMonthIncome)}</Typography>}
                   secondary={
                     <Typography variant="subtitle2" sx={{ color: 'grey.500', mt: 0.5 }}>
-                      {label}
+                      Monthly Income
                     </Typography>
                   }
                 />

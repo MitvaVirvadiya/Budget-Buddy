@@ -7,13 +7,15 @@ const dashBoardContext = createContext();
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:8080';
 
 export const DashBoardProvider = ({ children }) => {
- 
-  const [dashBoardData, setDashBoardData] = useState({});
-  const [isLoading, setLoading] = useState(true);
+  const [expenseData, setExpenseData] = useState({});
+  const [isExpenseLoading, setExpenseLoading] = useState(false);
 
-  const fetchDashBoardData = async () => {
-    setLoading(true);
-    setDashBoardData({})
+  const [incomeData, setIncomeData] = useState({});
+  const [isIncomeLoading, setIncomeLoading] = useState(false);
+
+  const fetchExpenseData = async () => {
+    setExpenseLoading(true);
+    setExpenseData({});
     try {
       const authHeadersConfig = {
         headers: {
@@ -21,20 +23,47 @@ export const DashBoardProvider = ({ children }) => {
           Authorization: `Bearer ${localStorage.getItem('accessToken')}`
         }
       };
-      
-      const response = await axios.get(`${BACKEND_URL}/api/v1/dashboard`, authHeadersConfig);
+
+      const response = await axios.get(`${BACKEND_URL}/api/v1/dashboard/expenses`, authHeadersConfig);
       if (response.data.success) {
-        setDashBoardData(response.data.data);
+        setExpenseData(response.data.data);
       }
     } catch (error) {
-      console.error('Fetching dashboard data failed:', error.response?.data?.message || error.message);
+      console.error('Fetching Expense data failed:', error.response?.data?.message || error.message);
       throw error;
     } finally {
-      setLoading(false);
+      setExpenseLoading(false);
     }
   };
 
-  return <dashBoardContext.Provider value={{ dashBoardData, isLoading, fetchDashBoardData }}>{children}</dashBoardContext.Provider>;
+  const fetchIncomeData = async () => {
+    setIncomeLoading(true);
+    setIncomeData({});
+    try {
+      const authHeadersConfig = {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('accessToken')}`
+        }
+      };
+
+      const response = await axios.get(`${BACKEND_URL}/api/v1/dashboard/incomes`, authHeadersConfig);
+      if (response.data.success) {
+        setIncomeData(response.data.data);
+      }
+    } catch (error) {
+      console.error('Fetching Income data failed:', error.response?.data?.message || error.message);
+      throw error;
+    } finally {
+      setIncomeLoading(false);
+    }
+  };
+
+  return (
+    <dashBoardContext.Provider value={{ expenseData, isExpenseLoading, fetchExpenseData, incomeData, isIncomeLoading, fetchIncomeData }}>
+      {children}
+    </dashBoardContext.Provider>
+  );
 };
 
 export const useDashBoard = () => useContext(dashBoardContext);

@@ -93,6 +93,7 @@ import healthcheckRouter from "./routes/healthcheck.routes.js";
 // * App routes
 import userRouter from "./routes/auth/user.routes.js";
 import expenseRouter from "./routes/expenses/expense.routes.js"
+import incomeRouter from "./routes/expenses/income.routes.js"
 import dashboardRouter from "./routes/expenses/dashboard.routes.js"
 import { avoidInProduction } from "./middlewares/auth.middlewares.js";
 
@@ -105,6 +106,7 @@ app.get("/", (req, res) => {
 });
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/expenses", expenseRouter);
+app.use("/api/v1/incomes", incomeRouter);
 app.use("/api/v1/dashboard", dashboardRouter);
 
 initializeSocketIO(io);

@@ -1,12 +1,13 @@
 // assets
-import { IconLicense, IconClipboardData, IconFileExport, IconWindmill } from '@tabler/icons-react';
+import { IconLicense, IconClipboardData, IconFileExport, IconWindmill, IconCoinRupee } from '@tabler/icons-react';
 
 // constant
 const icons = {
   IconLicense,
   IconClipboardData,
   IconFileExport,
-  IconWindmill
+  IconWindmill,
+  IconCoinRupee
 };
 
 // ==============================|| UTILITIES MENU ITEMS ||============================== //
@@ -22,6 +23,14 @@ const utilities = {
       type: 'item',
       url: '/utils/expenses',
       icon: icons.IconLicense,
+      breadcrumbs: false
+    },
+    {
+      id: 'util-incomes',
+      title: 'Incomes',
+      type: 'item',
+      url: '/utils/income',
+      icon: icons.IconCoinRupee,
       breadcrumbs: false
     },
     {

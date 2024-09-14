@@ -16,6 +16,7 @@ import TotalIncomeCard from 'ui-component/cards/Skeleton/TotalIncomeCard';
 
 // assets
 import TableChartOutlinedIcon from '@mui/icons-material/TableChartOutlined';
+import { formatCurrency } from 'utils/formatCurrency';
 
 // styles
 const CardWrapper = styled(MainCard)(({ theme }) => ({
@@ -47,7 +48,7 @@ const CardWrapper = styled(MainCard)(({ theme }) => ({
 
 // ==============================|| DASHBOARD - TOTAL INCOME DARK CARD ||============================== //
 
-const TotalIncomeDarkCard = ({ isLoading }) => {
+const TotalIncomeDarkCard = ({ isLoading, data }) => {
   const theme = useTheme();
 
   return (
@@ -76,7 +77,7 @@ const TotalIncomeDarkCard = ({ isLoading }) => {
                   sx={{ py: 0, my: 0.45 }}
                   primary={
                     <Typography variant="h4" sx={{ color: '#fff' }}>
-                      ₹203k
+                      {formatCurrency(data?.totalIncome)}
                     </Typography>
                   }
                   secondary={

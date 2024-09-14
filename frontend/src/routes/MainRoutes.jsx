@@ -10,6 +10,7 @@ const DashboardDefault = Loadable(lazy(() => import('views/dashboard')));
 
 // utilities routing
 const Expenses = Loadable(lazy(() => import('views/utilities/expenses')));
+const Incomes = Loadable(lazy(() => import('views/utilities/income')));
 const Reports = Loadable(lazy(() => import('views/utilities/reports')));
 const Exports = Loadable(lazy(() => import('views/utilities/exports')));
 
@@ -35,6 +36,15 @@ const MainRoutes = {
         {
           path: 'expenses',
           element: <Expenses />
+        }
+      ]
+    },
+    {
+      path: 'utils',
+      children: [
+        {
+          path: 'income',
+          element: <Incomes />
         }
       ]
     },
