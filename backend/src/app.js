@@ -95,6 +95,7 @@ import userRouter from "./routes/auth/user.routes.js";
 import expenseRouter from "./routes/expenses/expense.routes.js"
 import incomeRouter from "./routes/expenses/income.routes.js"
 import dashboardRouter from "./routes/expenses/dashboard.routes.js"
+import reportRouter from "./routes/expenses/report.routes.js"
 import { avoidInProduction } from "./middlewares/auth.middlewares.js";
 
 // * healthcheck
@@ -108,6 +109,7 @@ app.use("/api/v1/users", userRouter);
 app.use("/api/v1/expenses", expenseRouter);
 app.use("/api/v1/incomes", incomeRouter);
 app.use("/api/v1/dashboard", dashboardRouter);
+app.use("/api/v1/report", reportRouter);
 
 initializeSocketIO(io);
 
