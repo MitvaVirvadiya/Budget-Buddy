@@ -16,6 +16,9 @@ import { gridSpacing } from 'store/constant';
 import { useDashBoard } from 'context/Dashboard';
 import { useExpense } from 'context/Expense';
 import { useIncome } from 'context/Income';
+import MonthlyExpensesChart from 'views/components/reports/MonthlyExpensesChart';
+import MonthlyIncomeChart from 'views/components/reports/MonthlyIncomeChart';
+import CategoryPieChart from 'views/components/reports/CategoryPieChart';
 
 // ==============================|| DEFAULT DASHBOARD ||============================== //
 
@@ -54,6 +57,29 @@ const Dashboard = () => {
           </Grid>
         </Grid>
       </Grid>
+
+      <Grid item xs={12}>
+        <Grid container spacing={gridSpacing}>
+          <Grid item xs={12} md={6}>
+            <MonthlyExpensesChart />
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <CategoryPieChart apiEndpoint="/expenses/category-wise" title="Total Expenses by Category" />
+          </Grid>
+        </Grid>
+      </Grid>
+
+      <Grid item xs={12}>
+        <Grid container spacing={gridSpacing}>
+          <Grid item xs={12} md={6}>
+            <MonthlyIncomeChart />
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <CategoryPieChart apiEndpoint="/income/category-wise" title="Total Income by Category" />
+          </Grid>
+        </Grid>
+      </Grid>
+
       {/* <Grid item xs={12}>
         <Grid container spacing={gridSpacing}>
           <Grid item xs={12} md={8}>
