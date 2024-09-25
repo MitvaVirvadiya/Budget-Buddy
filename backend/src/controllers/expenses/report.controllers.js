@@ -11,7 +11,7 @@ export const getMonthlyExpensesSummary = asyncHandler(async (req, res) => {
   // Get year from query params or default to the current year
   const year = parseInt(req.query.year) || new Date().getFullYear();
 
-  // Pipeline to aggregate data
+  // Pipeline to aggregate data 
   const pipeline = [
     {
       // Filter the expenses by the logged-in user
