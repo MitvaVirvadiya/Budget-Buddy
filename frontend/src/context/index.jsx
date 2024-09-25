@@ -3,13 +3,16 @@ import { AuthProvider } from './Auth';
 import { ExpenseProvider } from './Expense';
 import { DashBoardProvider } from './Dashboard';
 import { IncomeProvider } from './Income';
+import { ReportProvider } from './Reports';
 
 const ContextWrapper = ({ children }) => {
   return (
     <AuthProvider>
       <ExpenseProvider>
         <IncomeProvider>
-          <DashBoardProvider>{children}</DashBoardProvider>
+          <DashBoardProvider>
+            <ReportProvider>{children}</ReportProvider>
+          </DashBoardProvider>
         </IncomeProvider>
       </ExpenseProvider>
     </AuthProvider>
