@@ -34,6 +34,7 @@ export const ReportProvider = ({ children }) => {
         setMonthlyExpensesData(response.data.data);
       }
     } catch (error) {
+      toast.error(error.response?.data?.message || error.message)
       console.error('Fetching Monthly Expenses data failed:', error.response?.data?.message || error.message);
       throw error;
     } finally {
@@ -56,6 +57,7 @@ export const ReportProvider = ({ children }) => {
         setMonthlyIncomeData(response.data.data);
       }
     } catch (error) {
+      toast.error(error.response?.data?.message || error.message)
       console.error('Fetching Monthly Income data failed:', error.response?.data?.message || error.message);
       throw error;
     } finally {
@@ -81,6 +83,7 @@ export const ReportProvider = ({ children }) => {
         setDailyExpensesData(response.data.data);
       }
     } catch (error) {
+      toast.error(error.response?.data?.message || error.message)
       console.error('Error fetching daily expenses data:', error.response?.data?.message || error.message);
     } finally {
       setDailyExpensesLoading(false);
@@ -105,6 +108,7 @@ export const ReportProvider = ({ children }) => {
         setDailyIncomeData(response.data.data);
       }
     } catch (error) {
+      toast.error(error.response?.data?.message || error.message)
       console.error('Error fetching daily income data:', error.response?.data?.message || error.message);
     } finally {
       setDailyIncomeLoading(false);

@@ -25,6 +25,7 @@ export const ExpenseProvider = ({ children }) => {
         setExpenses(response.data.data);
       }
     } catch (error) {
+      toast.error(error.response?.data?.message || error.message)
       console.error('Fetching expenses failed:', error.response?.data?.message || error.message);
       throw error;
     } finally {
@@ -47,6 +48,7 @@ export const ExpenseProvider = ({ children }) => {
         setExpenses((prev) => [...prev, response.data.data]);
       }
     } catch (error) {
+      toast.error(error.response?.data?.message || error.message)
       console.error('Adding expense failed:', error.response?.data?.message || error.message);
       throw error;
     }
@@ -67,6 +69,7 @@ export const ExpenseProvider = ({ children }) => {
         setExpenses((prev) => prev.map((expense) => (expense._id === id ? response.data.data : expense)));
       }
     } catch (error) {
+      toast.error(error.response?.data?.message || error.message)
       console.error('Updating expense failed:', error.response?.data?.message || error.message);
       throw error;
     }
@@ -87,6 +90,7 @@ export const ExpenseProvider = ({ children }) => {
         setExpenses((prev) => prev.filter((expense) => expense._id !== id));
       }
     } catch (error) {
+      toast.error(error.response?.data?.message || error.message)
       console.error('Deleting expense failed:', error.response?.data?.message || error.message);
       throw error;
     }

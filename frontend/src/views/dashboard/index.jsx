@@ -16,17 +16,26 @@ import { gridSpacing } from 'store/constant';
 import { useDashBoard } from 'context/Dashboard';
 import { useExpense } from 'context/Expense';
 import { useIncome } from 'context/Income';
+import { useBudget } from 'context/Budget';
+
 import MonthlyExpensesChart from 'views/components/reports/MonthlyExpensesChart';
 import MonthlyIncomeChart from 'views/components/reports/MonthlyIncomeChart';
 import CategoryPieChart from 'views/components/reports/CategoryPieChart';
+import BudgetCard from './BudgetCard';
 
 // ==============================|| DEFAULT DASHBOARD ||============================== //
 
 const Dashboard = () => {
   const { expenses } = useExpense();
   const { incomes } = useIncome();
-  const { expenseData, isExpenseLoading, fetchExpenseData, incomeData, isIncomeLoading, fetchIncomeData } = useDashBoard();
+  const { budgets, fetchBudgets, isLoading } = useBudget();
 
+  const { expenseData, isExpenseLoading, fetchExpenseData, incomeData, isIncomeLoading, fetchIncomeData } = useDashBoard();
+  
+  useEffect(() => {
+    fetchBudgets();
+  }, []);
+  
   useEffect(() => {
     fetchExpenseData();
   }, [expenses]);
@@ -56,6 +65,10 @@ const Dashboard = () => {
             </Grid>
           </Grid>
         </Grid>
+      </Grid>
+
+      <Grid item xs={12}>
+        <BudgetCard isLoading={isLoading} budgets={budgets} />
       </Grid>
 
       <Grid item xs={12}>

@@ -1,11 +1,40 @@
+import Budget from "../../models/expenses/budget.models.js";
 import Expense from "../../models/expenses/expense.models.js";
 import { ApiError } from "../../utils/ApiError.js";
 import { ApiResponse } from "../../utils/ApiResponse.js";
 import { asyncHandler } from "../../utils/asyncHandler.js";
+import { getTotalExpensesForMonth } from "../../utils/Expense.js";
+
 
 export const createExpense = asyncHandler(async (req, res) => {
+  const userId = req.user._id;
+  const { amount } = req.body;
+
+  const currentDate = new Date();
+  const currentMonth = currentDate.getMonth() + 1;  
+  const currentYear = currentDate.getFullYear();
+
+  const budget = await Budget.findOne({
+    owner: userId,
+    month: currentMonth,
+    year: currentYear,
+  });
+
+  // if (!budget) {
+  //   throw new ApiError(400, "No budget set for this month.");
+  // }
+
+  if(budget){
+    const totalSpent = await getTotalExpensesForMonth(userId, currentMonth, currentYear);
+    const remainingBudget = budget?.amount - totalSpent;
+    
+    if (remainingBudget < amount) {
+      throw new ApiError(400, `Expense exceeds your budget. You only have ${remainingBudget} left.`);
+    }
+  }
+
   const expense = new Expense(req.body);
-  expense.owner = req.user._id;
+  expense.owner = userId;
 
   await expense.save();
 
@@ -40,15 +69,38 @@ export const getExpenseById = asyncHandler(async (req, res) => {
 
 export const updateExpense = asyncHandler(async (req, res) => {
   const userId = req.user._id;
-  
+  const { amount } = req.body;
+
   let expense = await Expense.findOne({ _id: req.params.id, owner: userId });
 
   if (!expense) {
-    throw new ApiError(403, "No permission to update this expense or expense not found");
+    throw new ApiError(403, "No permission to update this expense or expense not found.");
   }
 
-  req.body.updatedAt = Date.now();  
+  const expenseDate = new Date(expense.createdAt);
+  const expenseMonth = expenseDate.getMonth() + 1;  
+  const expenseYear = expenseDate.getFullYear();
 
+  const budget = await Budget.findOne({
+    owner: userId,
+    month: expenseMonth,
+    year: expenseYear,
+  });
+
+  // if (!budget) {
+  //   throw new ApiError(400, "No budget set for this month.");
+  // }
+  if(budget){
+  const amountDifference = amount - expense.amount;
+
+  const totalSpent = await getTotalExpensesForMonth(userId, expenseMonth, expenseYear);
+  const remainingBudget = budget.amount - totalSpent;
+
+  if (remainingBudget < amountDifference) {
+    throw new ApiError(400, `Updated expense exceeds your budget. You only have ${remainingBudget} left.`);
+  }}
+  
+  req.body.updatedAt = Date.now();
   expense = await Expense.findByIdAndUpdate(req.params.id, req.body, {
     new: true,
     runValidators: true,

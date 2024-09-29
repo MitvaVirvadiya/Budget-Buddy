@@ -34,6 +34,14 @@ const utilities = {
       breadcrumbs: false
     },
     {
+      id: 'util-budget',
+      title: 'Budget',
+      type: 'item',
+      url: '/utils/budget',
+      icon: icons.IconCoinRupee,
+      breadcrumbs: false
+    },
+    {
       id: 'util-reports',
       title: 'Reports',
       type: 'item',

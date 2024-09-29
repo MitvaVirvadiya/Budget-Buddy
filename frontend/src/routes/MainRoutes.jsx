@@ -13,6 +13,7 @@ const Expenses = Loadable(lazy(() => import('views/utilities/expenses')));
 const Incomes = Loadable(lazy(() => import('views/utilities/income')));
 const Reports = Loadable(lazy(() => import('views/utilities/reports')));
 const Exports = Loadable(lazy(() => import('views/utilities/exports')));
+const Budget = Loadable(lazy(() => import('views/utilities/budget')));
 
 // ==============================|| MAIN ROUTING ||============================== //
 
@@ -65,7 +66,16 @@ const MainRoutes = {
           element: <Exports />
         }
       ]
-    }
+    },
+    {
+      path: 'utils',
+      children: [
+        {
+          path: 'budget',
+          element: <Budget />
+        }
+      ]
+    },
   ]
 };
 

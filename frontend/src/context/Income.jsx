@@ -25,6 +25,7 @@ export const IncomeProvider = ({ children }) => {
         setIncomes(response.data.data);
       }
     } catch (error) {
+      toast.error(error.response?.data?.message || error.message)
       console.error('Fetching Income failed:', error.response?.data?.message || error.message);
       throw error;
     } finally {
@@ -47,6 +48,7 @@ export const IncomeProvider = ({ children }) => {
         setIncomes((prev) => [...prev, response.data.data]);
       }
     } catch (error) {
+      toast.error(error.response?.data?.message || error.message)
       console.error('Adding income failed:', error.response?.data?.message || error.message);
       throw error;
     }
@@ -67,6 +69,7 @@ export const IncomeProvider = ({ children }) => {
         setIncomes((prev) => prev.map((income) => (income._id === id ? response.data.data : income)));
       }
     } catch (error) {
+      toast.error(error.response?.data?.message || error.message)
       console.error('Updating income failed:', error.response?.data?.message || error.message);
       throw error;
     }
@@ -87,6 +90,7 @@ export const IncomeProvider = ({ children }) => {
         setIncomes((prev) => prev.filter((income) => income._id !== id));
       }
     } catch (error) {
+      toast.error(error.response?.data?.message || error.message)
       console.error('Deleting income failed:', error.response?.data?.message || error.message);
       throw error;
     }

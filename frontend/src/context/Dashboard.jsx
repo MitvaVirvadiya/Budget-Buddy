@@ -29,6 +29,7 @@ export const DashBoardProvider = ({ children }) => {
         setExpenseData(response.data.data);
       }
     } catch (error) {
+      toast.error(error.response?.data?.message || error.message)
       console.error('Fetching Expense data failed:', error.response?.data?.message || error.message);
       throw error;
     } finally {
@@ -52,6 +53,7 @@ export const DashBoardProvider = ({ children }) => {
         setIncomeData(response.data.data);
       }
     } catch (error) {
+      toast.error(error.response?.data?.message || error.message)
       console.error('Fetching Income data failed:', error.response?.data?.message || error.message);
       throw error;
     } finally {
