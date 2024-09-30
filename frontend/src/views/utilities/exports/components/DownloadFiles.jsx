@@ -1,16 +1,17 @@
 import React, { useState } from "react";
 
 import { Box, Card, IconButton, Tooltip, Typography, CircularProgress  } from "@mui/material";
-import { FaRegFilePdf, FaRegFileExcel } from "react-icons/fa";
+import { FaRegFileExcel } from "react-icons/fa";
 // download react-icons
 
 const DownloadFiles = ({ file, onClick, index }) => {
-  const { label, name, pdf, excel, isLoading } = file;
+  const { name, excel, isLoading } = file;
   return (
     <Box>
       <Card
         sx={{
           width: "100%",
+          height: "250px",
           backgroundColor: "#fff",
           boxShadow: "0 2px 4px rgba(0, 0, 0, 0.2)",
           transition: "box-shadow 0.3s ease-in-out",
@@ -48,7 +49,7 @@ const DownloadFiles = ({ file, onClick, index }) => {
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
-            height: "145px",
+            height: "175px",
             transition: "background-color 0.3s",
             backgroundColor:"#e0e0e0" ,
             cursor: "pointer",
@@ -59,15 +60,8 @@ const DownloadFiles = ({ file, onClick, index }) => {
             <Box>
               {excel && (
                 <Tooltip title="Download Excel" placement="top">
-                  <IconButton onClick={() => onClick(label, "Excel")}>
+                  <IconButton onClick={onClick}>
                     <FaRegFileExcel style={{ fontSize: "30px", color: "#6aa84f" }} />
-                  </IconButton>
-                </Tooltip>
-              )}
-              {pdf && (
-                <Tooltip title="Download PDF" placement="top">
-                  <IconButton onClick={() => onClick(label, "PDF")}>
-                    <FaRegFilePdf style={{ fontSize: "30px", color: "#cc0000" }} />
                   </IconButton>
                 </Tooltip>
               )}
